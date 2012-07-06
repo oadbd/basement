@@ -1,41 +1,46 @@
 //Some global config stuff, everthing else in the toolbox will need to use
+var DEBUG = 0;
 
-W = "W";
-H = "H";
+var pxWidth = 1600;
+var pxHeight = 1600;
 
-pxWidth = 1600;
-pxHeight = 1600;
+var inWidth = 44 * 12;
+var inHeight = 34 * 12;
 
-inWidth = 33 * 12;
-inHeight = 33 * 12;
+var pxPerIn = 2;
 
-widthRatio = pxWidth / inWidth;
-heightRatio = pxHeight / inHeight;
+var elId = "floorplan";
+var el = null;
+var paper = null;
 
-elId = "floorplan";
-el = null;
-paper = null;
+var defaultWallWidth = 0;
+
+var C = {
+    wall:     DEBUG ? "#EAEAEA" : "#000000",
+    floor:    DEBUG ? "#FF0000" : "#EAEAEA",
+    ruler:    DEBUG ? "#AAAAAA" : "#AAAAAA",
+    misc:     DEBUG ? "#AAAAAA" : "#AAAAAA",
+    window:   DEBUG ? "#FFFFFF" : "#FFFFFF"
+};
 
 /**
  * Configure global options
  * @param (object) opts - 
- *      pxWidth: width of canvas in pixels
- *      pxHeight: height of canvas in pixels
- *      inWidth: width of canvas in inches
- *      inHeight: height of canvas in inches
+ *      inWidth: width of canvas in inches (default 32)
+ *      inHeight: height of canvas in inches (default 32)
+ *      pxPerIn: pixels per inch (default 4)
  *      elId: id of main div element
  */
 function config(opts) {
     var o = opts || {};
-    
-    pxWidth = o.pxWidth || pxWidth;
-    pxHeight = o.pxHeight || pxHeight;
-    
+        
     inWidth = o.inWidth || inWidth;
     inHeight = o.inHeight || inHeight;
 
-    widthRatio = pxWidth / inWidth;
-    heightRatio = pxHeight / inHeight;
+    pxPerIn = o.pxPerIn || pxPerIn;
+    
+    pxWidth = pxPerIn * inWidth;
+    pxHeight = pxPerIn * inHeight;
     
     elId = o.elId || elId;
 }
@@ -44,7 +49,8 @@ function init() {
     el = document.getElementById(elId);
     el.style.height = pxHeight + 'px';
     el.style.width = pxWidth + 'px';
-    
+ 
+    defaultWallWidth = len(0,4,0);
     paper = Raphael(el);
 }
 
@@ -57,6 +63,9 @@ function Point(x,y) {
     this.x = x;
     this.y = y;
 }
+Point.prototype.coord = function (xOff, yOff) {
+    return [this.x + (xOff || 0), this.y + (yOff || 0)].join(",");
+};
 
 /**
  * Calculate the number of inches given feet, inches and eigths
@@ -65,13 +74,15 @@ function Point(x,y) {
  * @param (number) eigths
  * @returns (number) the number of inches specified by the parameters
  */
-function down(feet, inches, eigths) {
+function len(feet, inches, eigths) {
     var l = (12 * (feet || 0)) + (inches || 0) + ((eigths || 0) / 8); 
-    return pixels(l, H);
+    return pixels(l);
 }
-function right(feet, inches, eigths) {
-    var l = (12 * (feet || 0)) + (inches || 0) + ((eigths || 0) / 8); 
-    return pixels(l, W);
+function pxToIn(pixels) {
+    var inches = pixels / pxPerIn;
+    var feet = inches / 12;
+    
+    return feet + "' " + inches + '"';
 }
 
 /**
@@ -81,6 +92,6 @@ function right(feet, inches, eigths) {
  * @param (dir) dir - Either W or H. Defaults to W
  * @returns (number) pixels
  */
-function pixels(length, dir) {
-    return length * (dir === H ? heightRatio : widthRatio);
+function pixels(length) {
+    return length * pxPerIn;
 }
