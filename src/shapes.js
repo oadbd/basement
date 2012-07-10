@@ -29,12 +29,20 @@ function floor(start, width, height) {
     return w;
 }
 
-function ruler(start, length, txt, angle) {
+function ruler(start, length, txt, angle, inside) {
     var e = new Point(start.x + length, start.y);
+    var arrows = inside || false;
     paper.setStart();
     paper.path(["M", start.coord(), "L", e.coord()].join(""));
-    paper.path(["M", start.coord(0,len(0,3) * -1), "L", start.coord(0,len(0,3))].join(""));
-    paper.path(["M", e.coord(0,len(0,3) * -1), "L", e.coord(0,len(0,3))].join(""));
+//    if (arrows) {
+//        paper.path(["M", start.coord(3,len(0,3) *  1), "L", start.coord(0,len(0,0))].join(""));
+//        paper.path(["M", start.coord(3,len(0,3) * -1), "L", start.coord(0,len(0,0))].join(""));
+//        paper.path(["M", e.coord(-3,len(0,3) *  1), "L", e.coord(0,len(0,0))].join(""));
+//        paper.path(["M", e.coord(-3,len(0,3) * -1), "L", e.coord(0,len(0,0))].join(""));
+//    } else {
+//        paper.path(["M", start.coord(0,len(0,3) * -1), "L", start.coord(0,len(0,3))].join(""));
+//        paper.path(["M", e.coord(0,len(0,3) * -1), "L", e.coord(0,len(0,3))].join(""));
+//    }
     paper.text(start.x + (length / 2.0), start.y - len(0,4), txt);
     var r = paper.setFinish();    
     r.attr("stroke", C.ruler);
@@ -48,7 +56,7 @@ function ruler(start, length, txt, angle) {
 function win(start, length, angle, width) {
     var windowWidth = width || defaultWallWidth;
     
-    console.log("drawing wall: " + [start.x, start.y, length, windowWidth].join(", "));
+    console.log("drawing window: " + [start.x, start.y, length, windowWidth].join(", "));
     paper.setStart();
     var w = paper.rect(start.x, start.y, length, windowWidth); 
     w.attr("stroke-width", DEBUG ? 1 : 0);
@@ -61,6 +69,30 @@ function win(start, length, angle, width) {
         wind.rotate(angle, start.x + (windowWidth / 2.0), start.y + (windowWidth / 2.0));
     }
     return wind;
+}
+
+function door(start, wallWidth, angle, length) {
+    var doorWidth = wallWidth || defaultWallWidth;
+    var doorLength = length || defaultDoorLength;
+    
+    console.log("drawing door: " + [start.x, start.y, length, doorWidth].join(", "));
+    paper.setStart();
+    var d = paper.rect(start.x, start.y, doorLength, doorWidth); 
+    d.attr("stroke-width", DEBUG ? 1 : 0);
+    d.attr("fill", C.door);    
+    
+    var doorLine = paper.path(["M", start.coord(), "L", start.coord(doorLength)]);
+    doorLine.attr("stroke-width", len(0,2));
+    doorLine.attr("stroke-linecap", "round");
+    
+    var dore = paper.setFinish();
+    
+    if (angle) {
+        dore.rotate(angle, start.x + (doorWidth / 2.0), start.y + (doorWidth / 2.0));
+    }
+    doorLine.rotate(330, start.x, start.y);
+    
+    return dore;
 }
 
 function stairs(start, length, width) {

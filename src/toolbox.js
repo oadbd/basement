@@ -14,12 +14,14 @@ var el = null;
 var paper = null;
 
 var defaultWallWidth = 0;
+var defaultDoorLength = 0;
 
 var C = {
-    wall:     DEBUG ? "#EAEAEA" : "#000000",
+    wall:     DEBUG ? "#EAEAEA" : "#5C3317",
     floor:    DEBUG ? "#FF0000" : "#EAEAEA",
-    ruler:    DEBUG ? "#AAAAAA" : "#AAAAAA",
+    ruler:    DEBUG ? "#AAAAAA" : "#FF0000",
     misc:     DEBUG ? "#AAAAAA" : "#AAAAAA",
+    door:     DEBUG ? "#EAEAEA" : "#EAEAEA",
     window:   DEBUG ? "#FFFFFF" : "#FFFFFF"
 };
 
@@ -51,7 +53,9 @@ function init() {
     el.style.width = pxWidth + 'px';
  
     defaultWallWidth = len(0,4,0);
+    defaultDoorLength = len(0,36,0);
     paper = Raphael(el);
+    
 }
 
 /**
@@ -80,7 +84,8 @@ function len(feet, inches, eigths) {
 }
 function pxToIn(pixels) {
     var inches = pixels / pxPerIn;
-    var feet = inches / 12;
+    var feet = parseInt(inches / 12,10);
+    inches = inches - (feet * 12)
     
     return feet + "' " + inches + '"';
 }
