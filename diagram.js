@@ -137,12 +137,16 @@ mainfloor.mousedown(function (evt) {
 });
 var mouseupHandler = function () {
     down = false;
+};
+mainfloor.mouseup(mouseupHandler);
+
+mainfloor.dblclick(function () {
     if (dLine) {
         dLine.remove();
         dLine = null;
+        document.getElementById("length").innerHTML = "";
     }
-};
-mainfloor.mouseup(mouseupHandler);
+});
 
 mainfloor.mousemove(function (evt, x, y) {
     if (down) {
