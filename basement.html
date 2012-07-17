@@ -3,15 +3,23 @@
         <title>Basement Floorplan</title>
         <link rel="stylesheet" type="text/css" href="src/basement.css" />
         <script src="lib/raphael.js"></script>
+        <script src="lib/canvg.js"></script>
+        <script src="lib/rgbcolor.js"></script>
         <script src="src/toolbox.js"></script>
         <script src="src/shapes.js"></script>
     </head>
 
     <body>
-        <div id="floorplan"></div>
-        <div id="coords"></div>
-        <div id="length"></div>
-        
+        <div id="floorplan-container">
+            <div id="floorplan"></div>
+        </div>
+        <canvas id="floorplan-canvas"></canvas>
+        <div id="info">
+            <a id="to-image" href="#">Export svg</a>
+            <div id="coords"></div>
+            <div id="length"></div>
+        </div>
+       
         <script src="diagram.js"></script>
     </body>
 

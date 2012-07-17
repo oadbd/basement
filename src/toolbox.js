@@ -18,11 +18,11 @@ var defaultDoorLength = 0;
 
 var C = {
     wall:     DEBUG ? "#EAEAEA" : "#5C3317",
-    floor:    DEBUG ? "#FF0000" : "#EAEAEA",
-    ruler:    DEBUG ? "#AAAAAA" : "#FF0000",
+    floor:    DEBUG ? "#FF0000" : "#FFFFFF",
+    ruler:    DEBUG ? "#AAAAAA" : "#AAAAAA",
     misc:     DEBUG ? "#AAAAAA" : "#AAAAAA",
-    door:     DEBUG ? "#EAEAEA" : "#EAEAEA",
-    window:   DEBUG ? "#FFFFFF" : "#FFFFFF"
+    door:     DEBUG ? "#EAEAEA" : "#FFFFFF",
+    _window:   DEBUG ? "#FAFAFA" : "#FAFAFA"
 };
 
 /**
@@ -53,7 +53,7 @@ function init() {
     el.style.width = pxWidth + 'px';
  
     defaultWallWidth = len(0,4,0);
-    defaultDoorLength = len(0,36,0);
+    defaultDoorLength = len(0,32,0);
     paper = Raphael(el);
     
 }

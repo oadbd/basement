@@ -34,15 +34,15 @@ function ruler(start, length, txt, angle, inside) {
     var arrows = inside || false;
     paper.setStart();
     paper.path(["M", start.coord(), "L", e.coord()].join(""));
-//    if (arrows) {
-//        paper.path(["M", start.coord(3,len(0,3) *  1), "L", start.coord(0,len(0,0))].join(""));
-//        paper.path(["M", start.coord(3,len(0,3) * -1), "L", start.coord(0,len(0,0))].join(""));
-//        paper.path(["M", e.coord(-3,len(0,3) *  1), "L", e.coord(0,len(0,0))].join(""));
-//        paper.path(["M", e.coord(-3,len(0,3) * -1), "L", e.coord(0,len(0,0))].join(""));
-//    } else {
-//        paper.path(["M", start.coord(0,len(0,3) * -1), "L", start.coord(0,len(0,3))].join(""));
-//        paper.path(["M", e.coord(0,len(0,3) * -1), "L", e.coord(0,len(0,3))].join(""));
-//    }
+    if (arrows) {
+        paper.path(["M", start.coord(3,len(0,3) *  1), "L", start.coord(0,len(0,0))].join(""));
+        paper.path(["M", start.coord(3,len(0,3) * -1), "L", start.coord(0,len(0,0))].join(""));
+        paper.path(["M", e.coord(-3,len(0,3) *  1), "L", e.coord(0,len(0,0))].join(""));
+        paper.path(["M", e.coord(-3,len(0,3) * -1), "L", e.coord(0,len(0,0))].join(""));
+    } else {
+        paper.path(["M", start.coord(0,len(0,3) * -1), "L", start.coord(0,len(0,3))].join(""));
+        paper.path(["M", e.coord(0,len(0,3) * -1), "L", e.coord(0,len(0,3))].join(""));
+    }
     paper.text(start.x + (length / 2.0), start.y - len(0,4), txt);
     var r = paper.setFinish();    
     r.attr("stroke", C.ruler);
@@ -60,7 +60,7 @@ function win(start, length, angle, width) {
     paper.setStart();
     var w = paper.rect(start.x, start.y, length, windowWidth); 
     w.attr("stroke-width", DEBUG ? 1 : 0);
-    w.attr("fill", C.window);    
+    w.attr("fill", C._window);    
     paper.path(["M", start.coord(0, windowWidth / 2), "L", start.coord(length, windowWidth / 2)]);
     
     var wind = paper.setFinish();

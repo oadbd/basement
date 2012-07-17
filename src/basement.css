@@ -6,7 +6,24 @@ body {
     margin: 0;
     padding: 0;
 }
+#floorplan-container {
+    width: 1600px;
+    height: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    overflow: auto;
+    border: 2px solid black;
+    background: #EAEAEA;
+}
 #floorplan {
     border: 1px solid #CECECE;
-    background: #EAEAEA;
+    background: #FFFFFF;
+}
+
+#info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 3px;
 }

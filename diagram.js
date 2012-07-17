@@ -77,14 +77,14 @@ function bedroom() {
     door(new Point(len(X + 1,2), len(Y + 18,6,4)), len(0,4,4), 315);
 
     //closet (top right)
-    wall(new Point(len(X + 0, 6), len(Y + 21,2)), len(2,6));
-    wall(new Point(len(X + 3), len(Y + 27,2)), len(6,4), 270);
+    wall(new Point(len(X + 0, 6), len(Y + 21,0)), len(2,6));
+    wall(new Point(len(X + 3), len(Y + 27)), len(6,4), 270);
     
 }
 
 function bathroom() {
-    wall(new Point(len(X + 7),   len(Y + 0,6)), len(9,2), 90); 
-    wall(new Point(len(X + 0,10), len(Y + 9,4)), len(6,6));
+    wall(new Point(len(X + 6),    len(Y + 0,6)), len(9,2), 90); 
+    wall(new Point(len(X + 1),    len(Y + 9,4)), len(5));
     door(new Point(len(X + 1,10), len(Y + 9,4)));
 }
 
@@ -93,15 +93,13 @@ function familyroom() {
 }
 
 function rulers() {
-    //ruler(new Point(len(X,0), len(Y + 24,6)), len(0,6), "T");
-    
-    ruler(new Point(len(X), len(Y - 1)), len(29,6), "29' 6\"");
-    
     //perimeter (top  right left)
     ruler(new Point(len(X), len(Y - 1)), len(29,6), "29' 6\"");    
     ruler(new Point(len(X + 31,6), len(Y)), len(28), "28' 0\"", 90);
     ruler(new Point(len(X - 1), len(Y + 13)), len(13), "13' 0\"", 270);
     ruler(new Point(len(X - 1), len(Y + 28)), len(8), "8' 0\"", 270);
+    
+    ruler(new Point(len(X + 28,6), len(Y + 28,8)), len(1), "1' 0\"");
     
     //windows (bottom right)
     ruler(new Point(len(X), len(Y + 28,8)), len(6,6), "6' 6\"");
@@ -110,12 +108,25 @@ function rulers() {
     
     //family room
     ruler(new Point(len(X + 17,4), len(Y + 2,6)), len(11,2), "11' 2\"", 0, true);
+    ruler(new Point(len(X + 15,6),len(Y+20,6)), len(13,0), "13' 0\"", 0, true);
     
     //furnace room
-    ruler(new Point(len(X + 8,10), len(Y + 2,6)), len(8,2), "8' 2\"", 0, true);
-
+    ruler(new Point(len(X + 6,4), len(Y + 2,6)), len(10,8), "10' 8\"", 0, true);
+    ruler(new Point(len(X + 16,4), len(Y + 1)), len(11,8), "11' 8\"", 90, true);
+    
+    //bathroom
+    ruler(new Point(len(X + 1,0), len(Y + 2,6)), len(5,0), "5' 0\"", 0, true);
+    ruler(new Point(len(X + 5,4), len(Y + 1)), len(8,4), "8' 4\"", 90, true);
+    
+    //bedroom
+    ruler(new Point(len(X + 10,6), len(Y + 16,6)), len(10,6), "10' 6\"", 90, true);
+    ruler(new Point(len(X + 2), len(Y + 21,4)), len(5,8), "5' 8\"", 90, true);
+    
+    ruler(new Point(len(X + 1),len(Y+20,6)), len(2,4), "2' 4\"", 0, true);
+    ruler(new Point(len(X + 3,4),len(Y+20,6)), len(11,8), "11' 8\"", 0, true);
 
 }
+floor(new Point(0,0), pxWidth, pxHeight);
 
 perimeter();
 misc();
@@ -163,4 +174,11 @@ mainfloor.mousemove(function (evt, x, y) {
     }
     document.getElementById("coords").innerHTML = "X: " + pxToIn(evt.offsetX - len(X)) + " &nbsp;&nbsp; Y: " + pxToIn(evt.offsetY - len(Y));
 });
+
+document.getElementById("to-image").addEventListener("click", function () {
+    var floorplan = document.getElementById("floorplan");
+    var svg = floorplan.innerHTML.replace(/>\s+/g, ">").replace(/\s+</g, "<");
+    window.open("data:image/svg+xml;base64," + btoa(svg), "_blank", "height=" + pxHeight + ",width=" + pxWidth);
+    return false;
+}, false);
 
